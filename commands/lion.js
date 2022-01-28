@@ -3,6 +3,11 @@ const config = require('../config')
 const {createLionMessageEmbed} = require("../components/LionMessageEmbed");
 
 exports.run = (client, message, args, level) => {
+
+    if(process.env.CHANNEL !== message.channel.id){
+        return;
+    }
+
     if (!args[0]) {
         message.channel.send("Please specify the lion number. Example: ~lion 1")
 

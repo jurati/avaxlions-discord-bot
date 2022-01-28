@@ -9,6 +9,11 @@ const { codeBlock } = require("@discordjs/builders");
 const { toProperCase } = require("../modules/functions.js");
 
 exports.run = (client, message, args, level) => {
+
+  if(process.env.CHANNEL !== message.channel.id){
+    return;
+  }
+
   // Grab the container from the client to reduce line length.
   const { container } = client;
   // If no specific command is called, show all filtered commands.

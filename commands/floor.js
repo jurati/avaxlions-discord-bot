@@ -3,6 +3,11 @@ const config = require('../config');
 const {createLionMessageEmbed} = require("../components/LionMessageEmbed");
 
 exports.run = (client, message, args, level) => {
+
+    if(process.env.CHANNEL !== message.channel.id){
+        return;
+    }
+
     request(`${config.apiUrl}/minted?page=0&sort=lowest_price`, function (error, response, body) {
         let lion = JSON.parse(body).data[0];
 

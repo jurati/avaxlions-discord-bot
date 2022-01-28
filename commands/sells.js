@@ -6,6 +6,11 @@ let interval;
 let lastSaleAt = new Date();
 
 exports.run = (client, message, args, level) => {
+
+    if(process.env.CHANNEL !== message.channel.id){
+        return;
+    }
+
     clearInterval(interval);
 
     interval = setInterval(() => {
