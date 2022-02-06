@@ -1,6 +1,7 @@
 const request = require('request');
 const config = require('../config');
 const {createLionMessageEmbed} = require("../components/LionMessageEmbed");
+const {setFloorNickname} = require("../components/FloorNickname");
 
 let interval;
 let lastListedAt = new Date();
@@ -10,7 +11,11 @@ exports.run = (client, message, args, level) => {
         return;
     }
 
-    clearInterval(interval);
+    if (interval) {
+        message.channel.send('Listings already on.');
+
+        return;
+    }
 
     interval = setInterval(() => {
         request(`${config.apiUrl}/minted?page=0&sort=recently_listed`, function (error, response, body) {
@@ -24,6 +29,7 @@ exports.run = (client, message, args, level) => {
 
             if (lions.length > 0) {
                 lastListedAt = new Date(lions[0].listedAt)
+                setFloorNickname(message.guild.members.cache.get(client.user.id))
             }
         });
     }, 30 * 1000)
@@ -33,7 +39,7 @@ exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: [],
-    permLevel: "Server Owner"
+    permLevel: "User"
 };
 
 exports.help = {

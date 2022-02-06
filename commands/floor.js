@@ -1,9 +1,9 @@
 const request = require('request');
 const config = require('../config');
 const {createLionMessageEmbed} = require("../components/LionMessageEmbed");
+const {setFloorNickname} = require("../components/FloorNickname");
 
 exports.run = (client, message, args, level) => {
-
     if(process.env.CHANNEL !== message.channel.id){
         return;
     }
